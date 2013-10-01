@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title><%=h html_title %></title>
+<meta name="description" content="<%= Redmine::Info.app_name %>" />
+<meta name="keywords" content="issue,bug,tracker" />
+<%= csrf_meta_tag %>
+<%= favicon %>
+<%= stylesheet_link_tag 'jquery/jquery-ui-1.8.21', 'application', :media => 'all' %>
+<%= stylesheet_link_tag 'rtl', :media => 'all' if l(:direction) == 'rtl' %>
+<%= javascript_heads %>
+<%= heads_for_theme %>
+</head>
+
+<script>
+  $(function() {
+    $("#project_selector, #page_selector").on("change", function() {
+      window.location = $(this).find(":selected").data("link")
+    })
+  })
+</script>
+
+<style>
+  .other-formats { display:none; }
+</style>
+
+<body class="<%=h body_css_classes %>">
+  <div id="wrapper">
+    <div id="wrapper2">
+      <div style="padding:8px 6px 0;">
+        <%= render 'project_navigation' %>
+      </div>
+      <div id="main" class="nosidebar">
+        <div id=content style="box-shadow:0 0 10px #bbb; margin-bottom:10px;">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

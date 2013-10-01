@@ -1,0 +1,3 @@
+<%= select_tag :project_selector, options_for_select(project_options, @project.identifier) %>
+
+<%= select_tag :page_selector, options_for_select(project_pages_options(@pages_by_parent_id), @page.id) %>
