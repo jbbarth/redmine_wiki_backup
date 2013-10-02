@@ -28,4 +28,8 @@ module WikiBackupHelper
     end
     ary
   end
+
+  def other_formats_links(&block)
+    #nothing for wiki backups!
+  end
 end
