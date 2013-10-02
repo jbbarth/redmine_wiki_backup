@@ -1,6 +1,8 @@
 class WikiBackupController < ApplicationController
   layout "wiki_backup"
 
+  accept_api_auth :index, :show
+
   def index
     redirect_to wiki_backup_path(:project_id => "infra")
   end
