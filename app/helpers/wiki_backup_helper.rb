@@ -3,7 +3,8 @@ module WikiBackupHelper
     projects_with_existing_wiki = Wiki.includes(:project)
                                       .where(:id => WikiPage.pluck(:wiki_id))
                                       .pluck(:project_id) 
-    @projects ||= Project.active
+    @projects ||= Project.visible
+                         .active
                          .has_module(:wiki)
                          .where(:id => projects_with_existing_wiki)
   end
