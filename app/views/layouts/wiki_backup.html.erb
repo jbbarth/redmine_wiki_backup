@@ -15,8 +15,18 @@
 
 <script>
   $(function() {
+    //navigation through select menus
     $("#project_selector, #page_selector").on("change", function() {
       window.location = $(this).find(":selected").data("link")
+    })
+    //wiki links correction => "wiki" => "wiki_backup"
+    $("a").on("click", function(e) {
+      var pattern = new RegExp("^/projects/([^ /]+)/wiki(.*)")
+      var matching = $(this).attr("href").match(pattern)
+      if (matching) {
+        window.location = "/wiki_backup/"+matching[1]+"/wiki/"+matching[2]
+        e.preventDefault()
+      }
     })
   })
 </script>
