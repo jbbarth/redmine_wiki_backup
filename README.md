@@ -3,6 +3,13 @@ Redmine wiki_backup plugin
 
 Allows you to backup your wiki(s) in a static website
 
+It adds a `/wiki_backup` URL that groups all redmine wiki pages you have access to. This is a simplified, flat version of your wiki
+pages across your redmine install. All wiki links are converted to wiki_backup links so that you'll stay within the sub-site as long
+as possible. This sub-site can be mirrored for offline usage (this is the primary use case). An example script is left in the
+`extra/` directory.
+
+PLEASE NOTE this is alpha software, nearly not tested automatically, so you should test it with care before putting it in production.
+
 Installation
 ------------
 
