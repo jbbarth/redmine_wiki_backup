@@ -12,7 +12,7 @@ module WikiBackupHelper
     ary = []
     Project.project_tree(projects) do |project, level|
       title = "#{level == 0 ? "" : "--" * level + " " }#{project.name}"
-      ary << [title, project.identifier, {"data-link" => wiki_backup_path(:project_id => project.identifier)}]
+      ary << [title, project.identifier, {"data-link" => wiki_backup_path(:project_id => project.identifier, :format => :html)}]
     end
     ary
   end
@@ -22,7 +22,7 @@ module WikiBackupHelper
     if pages[node]
       pages[node].each do |page|
         title = "#{level == 0 ? "" : "--" * level + " "}#{h(page.pretty_title)}"
-        ary << [title, page.id, {"data-link" => wiki_backup_path(:project_id => page.project.identifier, :id => page.title)}]
+        ary << [title, page.id, {"data-link" => wiki_backup_path(:project_id => page.project.identifier, :id => page.title, :format => :html)}]
         ary += project_pages_options(pages, page.id, level + 1) if pages[page.id]
       end
     end
