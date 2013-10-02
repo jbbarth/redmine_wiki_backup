@@ -1,3 +1,13 @@
 <%= select_tag :project_selector, options_for_select(project_options, @project.identifier) %>
 
-<%= select_tag :page_selector, options_for_select(project_pages_options(@pages_by_parent_id), @page.id) %>
+<%= select_tag :page_selector, options_for_select(project_pages_options(@pages_by_parent_id), @page.title) %>
+
+<div style="display:none;">
+<!-- help for wget mirror -->
+<% project_options.each do |title, value, hsh| %>
+  <%= link_to "Wiki: #{title}", wiki_backup_path(:project_id => value, :id => hsh["data-start-page"], :format => :html), :id => hsh["data-link-id"] %>
+<% end %>
+<% project_pages_options(@pages_by_parent_id).each do |title, value, hsh| %>
+  <%= link_to "Page: #{title}", wiki_backup_path(:project_id => @project.identifier, :id => value, :format => :html), :id => hsh["data-link-id"] %>
+<% end %>
+</div>

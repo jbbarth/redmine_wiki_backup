@@ -17,7 +17,8 @@
   $(function() {
     //navigation through select menus
     $("#project_selector, #page_selector").on("change", function() {
-      window.location = $(this).find(":selected").data("link")
+      var id = $(this).find(":selected").data("link-id")
+      window.location = $("#"+id).attr("href")
     })
     //wiki links correction => "wiki" => "wiki_backup"
     $("a").on("click", function(e) {
