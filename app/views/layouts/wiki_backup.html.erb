@@ -25,7 +25,9 @@
       var pattern = new RegExp("^/projects/([^ /]+)/wiki(.*)")
       var matching = $(this).attr("href").match(pattern)
       if (matching) {
-        window.location = "/wiki_backup/"+matching[1]+"/wiki/"+matching[2]+".html"
+        var url = "/wiki_backup/"+matching[1]+"/"+matching[2]+".html"
+        url = url.replace("//", "/")
+        window.location = url
         e.preventDefault()
       }
     })
