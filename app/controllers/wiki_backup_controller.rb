@@ -11,6 +11,7 @@ class WikiBackupController < ApplicationController
     @project = Project.find(params[:project_id].to_s)
     @wiki = @project.wiki
     @page = @wiki.find_page(params[:id])
+    @page = @wiki.find_page(@wiki.start_page) if @page.nil?
     if params[:id].blank?
       redirect_to :id => @page.title, :format => :html
     else
