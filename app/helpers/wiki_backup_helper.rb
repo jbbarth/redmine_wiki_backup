@@ -32,4 +32,11 @@ module WikiBackupHelper
   def other_formats_links(&block)
     #nothing for wiki backups!
   end
+
+  def url_for(options = {})
+    if options.is_a?(Hash) && options[:controller] == 'wiki'
+      options[:controller] = 'wiki_backup'
+    end
+    super
+  end
 end
