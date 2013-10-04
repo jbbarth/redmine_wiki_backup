@@ -35,8 +35,17 @@ module WikiBackupHelper
   end
 
   def url_for(options = {})
-    if options.is_a?(Hash) && options[:controller] == 'wiki'
-      options[:controller] = 'wiki_backup'
+    if options.is_a?(Hash)
+      #patch links to wiki pages
+      if options[:controller] == 'wiki'
+        options[:controller] = 'wiki_backup'
+      end
+      #patch links to attachments
+      #it just adds an option so that the route that will be picked will be the one with the '/wiki_backup'
+      #prefix, so wget --mirror actually mirror those files too.
+      if options[:controller] == 'attachments' && options[:action].in?(%w(download show))
+        options[:context] = 'wiki_backup'
+      end
     end
     super
   end
