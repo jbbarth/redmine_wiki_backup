@@ -45,6 +45,10 @@ module WikiBackupHelper
       #prefix, so wget --mirror actually mirror those files too.
       if options[:controller] == 'attachments' && options[:action].in?(%w(download show thumbnail))
         options[:context] = 'wiki_backup'
+        # add filename automatically so that we don't have both attachments/1234 AND attachments/1234/name.jpg,
+        # which would lead wget to not create the first one and point to the directory, while we actually want
+        # the file to be served...
+        options[:filename] = options[:id].filename if options[:filename].blank? && options[:id].is_a?(Attachment)
       end
     end
     super
