@@ -5,8 +5,8 @@ RedmineApp::Application.routes.draw do
                                                :context => 'wiki_backup'
   get 'wiki_backup/attachments/download/:id/:filename', :controller => 'attachments', :action => 'download', :id => /\d+/, :filename => /.*/,
                                                         :context => 'wiki_backup'
-  get 'wiki_backup/attachments/download/:id', :controller => 'attachments', :action => 'download', :id => /\d+/,
+  get 'wiki_backup/attachments/download/:id', :controller => 'attachments', :action => 'download',
                                               :context => 'wiki_backup'
-  get 'wiki_backup/attachments/thumbnail/:id(/:size)', :controller => 'attachments', :action => 'thumbnail', :id => /\d+/, :size => /\d+/,
+  get 'wiki_backup/attachments/thumbnail/:id(/:size)', :controller => 'attachments', :action => 'thumbnail', :size => /\d+/,
                                                        :context => 'wiki_backup'
 end
