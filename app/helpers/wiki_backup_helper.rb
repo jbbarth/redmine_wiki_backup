@@ -43,7 +43,7 @@ module WikiBackupHelper
       #patch links to attachments
       #it just adds an option so that the route that will be picked will be the one with the '/wiki_backup'
       #prefix, so wget --mirror actually mirror those files too.
-      if options[:controller] == 'attachments' && options[:action].in?(%w(download show))
+      if options[:controller] == 'attachments' && options[:action].in?(%w(download show thumbnail))
         options[:context] = 'wiki_backup'
       end
     end
