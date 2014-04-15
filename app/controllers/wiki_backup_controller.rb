@@ -1,4 +1,5 @@
 class WikiBackupController < ApplicationController
+  helper :all
   layout "wiki_backup"
 
   accept_api_auth :index, :show
