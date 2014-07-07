@@ -22,9 +22,4 @@ class WikiBackupController < ApplicationController
       @pages_by_parent_id = @pages.group_by(&:parent_id)
     end
   end
-
-###  private
-###  def missing_template
-###    binding.pry
-###  end
 end
