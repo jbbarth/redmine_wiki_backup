@@ -1,2 +1,3 @@
-
-<%= render :file => Rails.root.join('app/views/wiki/show'), :handlers => [:erb], :formats => [:html] %>
+<% if @content.present? %>
+  <%= render :file => Rails.root.join('app/views/wiki/show'), :handlers => [:erb], :formats => [:html] %>
+<% end %>

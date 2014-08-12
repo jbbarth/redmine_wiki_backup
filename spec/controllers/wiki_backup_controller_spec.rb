@@ -15,6 +15,8 @@ describe WikiBackupController do
   end
 
   describe "#show" do
+    render_views
+
     let!(:project) { Project.find(1) }
     let!(:wiki) { project.wiki }
     let!(:start_page) { wiki.find_page(id=nil) }
@@ -35,6 +37,17 @@ describe WikiBackupController do
     it "gets latest content for a page" do
       get :show, :project_id => project, :id => other_page.title
       assigns(:content).should be_present
+    end
+
+    it "doesn't break if page is blank" do
+      WikiPage.delete_all
+      get :show, :project_id => project
+      response.code.should == "404"
+    end
+
+    it "doesn't break if content is blank" do
+      WikiContent.delete_all
+      get :show, :project_id => project, :id => start_page.title
     end
   end
 end

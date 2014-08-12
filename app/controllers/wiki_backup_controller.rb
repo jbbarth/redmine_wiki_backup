@@ -13,13 +13,17 @@ class WikiBackupController < ApplicationController
     @wiki = @project.wiki
     @page = @wiki.find_page(params[:id])
     @page = @wiki.find_page(@wiki.start_page) if @page.nil?
-    if params[:id].blank?
-      redirect_to :id => @page.title, :format => :html
-    else
+    if @page && params[:id].present?
       @content = @page.content_for_version()
       # second select box
       @pages = @wiki.pages.with_updated_on.all(:order => 'title', :include => {:wiki => :project})
       @pages_by_parent_id = @pages.group_by(&:parent_id)
+    elsif @page
+      #... with params[:id] blank, redirect to start page
+      redirect_to :id => @page.title, :format => :html
+    else
+      #no page, no :id, let's call it a 404
+      render_404
     end
   end
 end
