@@ -1,13 +1,13 @@
 require "spec_helper"
 
-describe WikiBackupController do
+describe WikiBackupController, type: :controller do
   fixtures :wikis, :wiki_pages, :wiki_contents, :wiki_content_versions,
            :projects, :enabled_modules
 
   describe "#index" do
     it "redirects to the main project" do
       get :index
-      response.should redirect_to wiki_backup_path("infra")
+      expect(response).to redirect_to wiki_backup_path("infra")
     end
 
     #TODO: for now the main project is hardcoded as "infra"
@@ -24,25 +24,25 @@ describe WikiBackupController do
 
     it "display a wiki page" do
       get :show, :project_id => project, :id => other_page.title
-      assigns(:project).should == project
-      assigns(:wiki).should == wiki
-      assigns(:page).should == other_page
+      expect(assigns(:project)).to eq project
+      expect(assigns(:wiki)).to eq wiki
+      expect(assigns(:page)).to eq other_page
     end
 
     it "redirects to the wiki start page if no id" do
       get :show, :project_id => project
-      response.should redirect_to wiki_backup_path(:project_id => project, :id => start_page.title, :format => :html)
+      expect(response).to redirect_to wiki_backup_path(:project_id => project, :id => start_page.title, :format => :html)
     end
 
     it "gets latest content for a page" do
       get :show, :project_id => project, :id => other_page.title
-      assigns(:content).should be_present
+      expect(assigns(:content)).to be_present
     end
 
     it "doesn't break if page is blank" do
       WikiPage.delete_all
       get :show, :project_id => project
-      response.code.should == "404"
+      expect(response.code).to eq "404"
     end
 
     it "doesn't break if content is blank" do
