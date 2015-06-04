@@ -16,7 +16,7 @@ class WikiBackupController < ApplicationController
     if @page && params[:id].present?
       @content = @page.content_for_version()
       # second select box
-      @pages = @wiki.pages.with_updated_on.all(:order => 'title', :include => {:wiki => :project})
+      @pages = @wiki.pages.with_updated_on.order('title').includes(:wiki => :project)
       @pages_by_parent_id = @pages.group_by(&:parent_id)
     elsif @page
       #... with params[:id] blank, redirect to start page
