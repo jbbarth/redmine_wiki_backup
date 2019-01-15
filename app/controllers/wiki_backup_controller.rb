@@ -26,4 +26,8 @@ class WikiBackupController < ApplicationController
       render_404
     end
   end
+
+  def history
+    redirect_to history_project_wiki_page_path(id: params[:id], project_id: params[:project_id])
+  end
 end
