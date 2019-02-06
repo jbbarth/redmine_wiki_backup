@@ -10,7 +10,7 @@ class WikiBackupController < ApplicationController
 
   def show
     # show wiki page should only receive HTML GET request
-    render_404 if request.format.to_s.include?('image')
+    render_404 if request.format.to_s.include?('image') #Avoid 406 Not Acceptable responses introduced in Rails 5 : keep 404 errors like in Rails 4
 
     @project = Project.find(params[:project_id].to_s)
     @wiki = @project.wiki
