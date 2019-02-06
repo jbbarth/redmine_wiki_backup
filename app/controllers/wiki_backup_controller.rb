@@ -9,6 +9,9 @@ class WikiBackupController < ApplicationController
   end
 
   def show
+    # show wiki page should only receive HTML GET request
+    render_404 if request.format.to_s.include?('image')
+
     @project = Project.find(params[:project_id].to_s)
     @wiki = @project.wiki
     @page = @wiki.find_page(params[:id])
