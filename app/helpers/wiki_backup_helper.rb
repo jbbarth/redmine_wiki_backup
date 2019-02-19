@@ -39,7 +39,7 @@ module WikiBackupHelper
   def url_for(options = {})
     if options.is_a?(Hash)
       #patch links to wiki pages
-      if options[:controller] == 'wiki'
+      if options[:controller] == 'wiki' && options[:context] != 'top_menu'
         options[:controller] = 'wiki_backup'
       end
       #patch links to attachments
