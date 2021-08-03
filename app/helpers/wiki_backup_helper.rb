@@ -10,14 +10,12 @@ module WikiBackupHelper
   end
 
   def project_options
-    Rails.cache.fetch("project-tree-for-options-#{Project.maximum("updated_on").to_i}") do
-      ary = []
-      Project.project_tree(projects) do |project, level|
-        title = "#{level == 0 ? "" : "--" * level + " " }#{project.name}"
-        ary << [title, project.identifier, {"data-link-id" => "wiki_project_#{project.identifier}", "data-start-page" => project.wiki.start_page}]
-      end
-      ary
+    ary = []
+    Project.project_tree(projects) do |project, level|
+      title = "#{level == 0 ? "" : "--" * level + " " }#{project.name}"
+      ary << [title, project.identifier, {"data-link-id" => "wiki_project_#{project.identifier}", "data-start-page" => project.wiki.start_page}]
     end
+    ary
   end
 
   def project_pages_options(pages, node=nil, level = 0)
@@ -39,7 +37,7 @@ module WikiBackupHelper
   def url_for(options = {})
     if options.is_a?(Hash)
       #patch links to wiki pages
-      if options[:controller] == 'wiki' && options[:context] != 'top_menu'
+      if options[:controller] == 'wiki' && options[:context] != 'top_menu' && options[:action] != 'new'
         options[:controller] = 'wiki_backup'
       end
       #patch links to attachments

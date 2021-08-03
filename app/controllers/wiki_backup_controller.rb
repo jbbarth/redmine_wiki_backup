@@ -3,7 +3,8 @@ class WikiBackupController < ApplicationController
   layout "wiki_backup"
 
   accept_api_auth :index, :show
-
+  before_action :set_wiki, :authorize_wiki, only: :show
+  
   def index
     redirect_to wiki_backup_path(:project_id => "infra")
   end
@@ -12,8 +13,6 @@ class WikiBackupController < ApplicationController
     # show wiki page should only receive HTML GET request
     render_404 if request.format.to_s.include?('image') #Avoid 406 Not Acceptable responses introduced in Rails 5 : keep 404 errors like in Rails 4
 
-    @project = Project.find(params[:project_id].to_s)
-    @wiki = @project.wiki
     @page = @wiki.find_page(params[:id])
     @page = @wiki.find_page(@wiki.start_page) if @page.nil?
     if @page && params[:id].present?
@@ -32,5 +31,19 @@ class WikiBackupController < ApplicationController
 
   def history
     redirect_to history_project_wiki_page_path(id: params[:id], project_id: params[:project_id])
+  end
+
+  private
+
+  def set_wiki
+    @project = Project.find(params[:project_id])
+    @wiki = @project.wiki
+    render_404 unless @wiki
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+
+  def authorize_wiki
+    authorize('wiki')
   end
 end
